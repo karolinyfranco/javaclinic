@@ -4,29 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="880a8861-866c-4f88-b594-c7cde3e712b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Consulta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Especialidade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Medico.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Paciente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Pessoa.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Usuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidacaoException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorHorario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorMedico.java" afterDir="false" />
-    </list>
+    <list default="true" id="880a8861-866c-4f88-b594-c7cde3e712b7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +33,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true"
   }
