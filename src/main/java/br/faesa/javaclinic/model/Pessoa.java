@@ -1,5 +1,7 @@
 package br.faesa.javaclinic.model;
 
+import java.util.Objects;
+
 public class Pessoa {
     private String nome;
     private String email;
@@ -50,6 +52,31 @@ public class Pessoa {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public void atualizar(String nome, String telefone, String endereco) {
+        if (nome != null) {
+            this.setNome(nome);
+        }
+        if (telefone != null) {
+            this.setTelefone(telefone);
+        }
+        if (endereco != null) {
+            this.setEndereco(endereco);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return Objects.equals(email, pessoa.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(email);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package br.faesa.javaclinic.model;
 
+import java.util.Objects;
+
 public class Paciente extends Pessoa{
     private String cpf;
 
@@ -18,6 +20,20 @@ public class Paciente extends Pessoa{
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Paciente paciente = (Paciente) o;
+        return Objects.equals(cpf, paciente.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), cpf);
     }
 
     @Override

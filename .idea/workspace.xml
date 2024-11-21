@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="880a8861-866c-4f88-b594-c7cde3e712b7" name="Changes" comment="" />
+    <list default="true" id="880a8861-866c-4f88-b594-c7cde3e712b7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Consulta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Consulta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Especialidade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Especialidade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Medico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Medico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Paciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Paciente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Pessoa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorHorario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorHorario.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,9 +36,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2p4fiEGbKag0FIbg8TKkwQTB76y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -32,12 +47,34 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true"
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/luana/OneDrive/Documentos/karol faesa/2 periodo/lab de programação II/lista5"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.faesa.javaclinic.Main" />
+      <module name="java-clinic" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.faesa.javaclinic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

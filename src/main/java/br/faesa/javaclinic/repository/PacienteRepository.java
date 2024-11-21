@@ -12,7 +12,7 @@ public class PacienteRepository {
     public static void salvarPacientes(List<Paciente> pacientes) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_PACIENTES))) {
             for (Paciente p : pacientes) {
-                writer.write(p.getNome() + "-" + p.getEmail() + "-" + p.getEndereco() + "-" + p.getTelefone() + "-" + p.getCpf() +"\n");
+                writer.write(p.getNome() + ";" + p.getEmail() + ";" + p.getEndereco() + ";" + p.getTelefone() + ";" + p.getCpf() +"\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,7 +24,7 @@ public class PacienteRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader(PATH_PACIENTES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] dados = linha.split("-\\s*"); // Usa uma expressão regular para ignorar espaços ao redor da vírgula
+                String[] dados = linha.split(";\\s*"); // Usa uma expressão regular para ignorar espaços ao redor da vírgula
                 if (dados.length == 5) { // Verifica se há exatamente 6 partes (ajustar de acordo com a quantidade de atributos)
                     String nome = dados[0].trim();
                     String email = dados[1].trim();

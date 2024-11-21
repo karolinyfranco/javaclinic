@@ -14,28 +14,27 @@ public class ValidadorHorario {
         this.consultaRepository = consultaRepository;
     }
 
-    public void validarHorarioFuncionamentoClinica(LocalDateTime dataConsulta) {
-        boolean domingo = dataConsulta.getDayOfWeek().equals(DayOfWeek.SUNDAY);
-        boolean antesDaAbertura = dataConsulta.getHour() < 7;
-        boolean depoisDoEncerramento = dataConsulta.getHour() > 18;
+    public void validarHorarioFuncionamentoClinica(LocalDateTime data) {
+        boolean domingo = data.getDayOfWeek().equals(DayOfWeek.SUNDAY);
+        boolean antesDaAbertura = data.getHour() < 7;
+        boolean depoisDoEncerramento = data.getHour() > 18;
 
         if (domingo || antesDaAbertura || depoisDoEncerramento) {
             throw new ValidacaoException("Consulta fora do horário de funcionamento da clínica");
         }
     }
 
-    public void validarHorarioAntecedenciaAgendamento(LocalDateTime dataConsulta) {
-        LocalDateTime agora = LocalDateTime.now();
-        long diferencaEmMinutos = Duration.between(agora, dataConsulta).toMinutes();
+    public void validarHorarioAntecedenciaAgendamento(LocalDateTime data) {
+        long diferencaEmMinutos = Duration.between(LocalDateTime.now(), data).toMinutes();
 
         if (diferencaEmMinutos < 30) {
             throw new ValidacaoException("Consulta deve ser agendada com antecedência mínima de 30 minutos.");
         }
     }
 
-    public void validarHorarioAntecedenciaCancelamento(Long idConsulta) {
+    public void validarHorarioAntecedenciaCancelamento(Long id) {
         // Busca a consulta pelo ID
-        Consulta consulta = consultaRepository.buscarConsultaPorId(idConsulta);
+        Consulta consulta = consultaRepository.buscarConsultaPorId(id);
         if (consulta == null) {
             throw new ValidacaoException("Consulta não encontrada.");
         }
