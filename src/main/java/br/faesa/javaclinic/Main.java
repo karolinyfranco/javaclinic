@@ -74,6 +74,15 @@ public class Main {
         System.out.print("Digite o tipo de usuário (F para funcionário / P para paciente): ");
         char tipo = scanner.next().charAt(0);
 
+        // Verifica se o nome de usuário já está em uso
+        List<Usuario> usuariosExistentes = UsuarioRepository.carregarUsuarios(); // Carrega usuários já cadastrados
+        boolean usuarioDuplicado = usuariosExistentes.stream().anyMatch(u -> u.getUsuario().equals(usuario));
+
+        if (usuarioDuplicado) {
+            System.out.println("Erro: O nome de usuário '" + usuario + "' já está em uso.");
+            return; // Interrompe o fluxo se o usuário já existe
+        }
+
         // Criando o novo usuário
         Usuario novoUsuario = new Usuario(usuario, senha, tipo);
 
@@ -213,6 +222,15 @@ public class Main {
             return;
         }
 
+        // Verifica se o CRM já está em uso
+        List<Medico> medicosExistentes = MedicoRepository.carregarMedicos(); // Carrega médicos já cadastrados
+        boolean crmDuplicado = medicosExistentes.stream().anyMatch(m -> m.getCrm().equals(crm));
+
+        if (crmDuplicado) {
+            System.out.println("Erro: O CRM " + crm + " já está em uso.");
+            return; // Interrompe o fluxo se o CRM já existe
+        }
+
         Medico medico = new Medico(nome, email, endereco, telefone, crm, especialidade);
 
         // Valida a entidade médico
@@ -244,6 +262,15 @@ public class Main {
         telefone = scanner.nextLine();
         System.out.print("CPF do paciente: ");
         cpf = scanner.nextLine();
+
+        // Verifica se o CPF já está em uso
+        List<Paciente> pacientesExistentes = PacienteRepository.carregarPacientes(); // Carrega pacientes já cadastrados
+        boolean cpfDuplicado = pacientesExistentes.stream().anyMatch(p -> p.getCpf().equals(cpf));
+
+        if (cpfDuplicado) {
+            System.out.println("Erro: O CPF " + cpf + " já está em uso.");
+            return; // Interrompe o fluxo se o CPF já existe
+        }
 
         Paciente paciente = new Paciente(nome, email, endereco, telefone, cpf);
 
