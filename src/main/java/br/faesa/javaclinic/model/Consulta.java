@@ -1,13 +1,25 @@
 package br.faesa.javaclinic.model;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Consulta {
     private Long id;
+
+    @NotBlank(message = "O nome do médico é obrigatório.")
     private String nomeMedico;
+
+    @NotBlank(message = "O nome do paciente é obrigatório.")
     private String nomePaciente;
+
+    @NotNull(message = "Especialidade é obrigatória")
     private Especialidade especialidade;
+
+    @Future(message = "A data da consulta deve ser no futuro.")
     private LocalDateTime data;
 
     public Consulta(Long id, String nomeMedico, String nomePaciente, Especialidade especialidade, LocalDateTime data) {
@@ -20,8 +32,8 @@ public class Consulta {
 
     public Consulta() {
         this.id = null;
-        this.nomeMedico = null;
-        this.nomePaciente = null;
+        this.nomeMedico = "";
+        this.nomePaciente = "";
         this.especialidade = null;
         this.data = null;
     }
@@ -81,10 +93,11 @@ public class Consulta {
 
     @Override
     public String toString() {
-        return "Informações da consulta: " +
-                "\n Nome do médico: " + nomeMedico + '\'' +
-                "\n Nome do paciente: " + nomePaciente + '\'' +
-                "\n Especialidade: " + especialidade.name() + '\'' +
+        return "---------------------" +
+                "\n ID: " + id +
+                "\n Nome do médico: " + nomeMedico +
+                "\n Nome do paciente: " + nomePaciente  +
+                "\n Especialidade: " + especialidade.name() +
                 "\n Data da consulta: " + data;
     }
 }

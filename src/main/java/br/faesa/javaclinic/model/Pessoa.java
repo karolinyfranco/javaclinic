@@ -1,11 +1,24 @@
 package br.faesa.javaclinic.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 import java.util.Objects;
 
 public class Pessoa {
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
+
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Formato do email é inválido")
     private String email;
+
+    @NotBlank(message = "Dados do endereço são obrigatórios")
     private String endereco;
+
+    @NotBlank(message = "Telefone é obrigatório")
+    @Pattern(regexp = "\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}", message = "Formato do telefone é inválido")
     private String telefone;
 
     public Pessoa(String nome, String email, String endereco, String telefone) {
@@ -55,13 +68,13 @@ public class Pessoa {
     }
 
     public void atualizar(String nome, String telefone, String endereco) {
-        if (nome != null) {
+        if (!nome.isEmpty()) {
             this.setNome(nome);
         }
-        if (telefone != null) {
+        if (!telefone.isEmpty()) {
             this.setTelefone(telefone);
         }
-        if (endereco != null) {
+        if (!endereco.isEmpty()) {
             this.setEndereco(endereco);
         }
     }
@@ -81,9 +94,9 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", telefone='" + telefone;
+        return "Nome: " + nome + "\n" +
+                "Email: " + email + "\n" +
+                "Endereço: " + endereco + "\n" +
+                "Telefone: " + telefone + "\n";
     }
 }

@@ -10,28 +10,41 @@ import br.faesa.javaclinic.service.Usuario;
 import br.faesa.javaclinic.service.validator.ValidacaoException;
 import br.faesa.javaclinic.service.validator.ValidadorHorario;
 import br.faesa.javaclinic.service.validator.ValidadorMedico;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import org.hibernate.validator.HibernateValidator;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
-    static List<Usuario> usuarios = UsuarioRepository.carregarUsuarios();
-    static List<Medico> medicos = MedicoRepository.carregarMedicos();
-    static List<Paciente> pacientes = PacienteRepository.carregarPacientes();
-    static List<Consulta> consultas = ConsultaRepository.carregarConsultas();
-    static ConsultaRepository consultaRepository = new ConsultaRepository();
-    static Scanner scanner = new Scanner(System.in);
+    private static final List<Usuario> usuarios = UsuarioRepository.carregarUsuarios();
+    private static final List<Medico> medicos = MedicoRepository.carregarMedicos();
+    private static final List<Paciente> pacientes = PacienteRepository.carregarPacientes();
+    private static final List<Consulta> consultas = ConsultaRepository.carregarConsultas();
+    private static final ConsultaRepository consultaRepository = new ConsultaRepository();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+            .configure()
+            .messageInterpolator(new ParameterMessageInterpolator())  // Desabilita o EL
+            .buildValidatorFactory();
+    private static final Validator validator = validatorFactory.getValidator();
 
     public static void main(String[] args) {
         int opcao;
         do {
-            System.out.println("\n--- Menu Inicial ---");
-            System.out.println("1. Cadastrar Novo Usuário");
-            System.out.println("2. Realizar Login");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("""
+                    \n--- Menu Inicial ---
+                    1. Cadastrar Novo Usuário
+                    2. Realizar Login
+                    0. Sair
+                    Escolha uma opção:\s""");
             opcao = scanner.nextInt();
             scanner.nextLine(); // Limpa o buffer
 
@@ -89,17 +102,19 @@ public class Main {
     private static void menuFuncionario() {
         int opcao;
         do {
-            System.out.println("\n--- Menu do Funcionário ---");
-            System.out.println("1. Cadastrar médico");
-            System.out.println("2. Cadastrar paciente");
-            System.out.println("3. Listar médicos");
-            System.out.println("4. Listar pacientes");
-            System.out.println("5. Atualizar dados de um médico");
-            System.out.println("6. Atualizar dados de um médico");
-            System.out.println("7. Excluir médico");
-            System.out.println("8. Excluir paciente");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("""
+                    \n--- Menu do Funcionário ---
+                    1. Cadastrar médico
+                    2. Cadastrar paciente
+                    3. Listar médicos
+                    4. Listar pacientes
+                    5. Listar consultas de um paciente
+                    6. Atualizar dados de um médico
+                    7. Atualizar dados de um paciente
+                    8. Excluir médico
+                    9. Excluir paciente
+                    0. Sair
+                    Escolha uma opção:\s""");
             opcao = scanner.nextInt();
             scanner.nextLine(); // Limpa o buffer
 
@@ -117,15 +132,18 @@ public class Main {
                     listarPacientes();
                     break;
                 case 5:
-                    atualizarMedico();
+                    listarConsultas();
                     break;
                 case 6:
-                    atualizarPaciente();
+                    atualizarMedico();
                     break;
                 case 7:
-                    excluirMedico();
+                    atualizarPaciente();
                     break;
                 case 8:
+                    excluirMedico();
+                    break;
+                case 9:
                     excluirPaciente();
                     break;
                 case 0:
@@ -140,12 +158,14 @@ public class Main {
     private static void menuPaciente() {
         int opcao;
         do {
-            System.out.println("\n--- Menu do Paciente ---");
-            System.out.println("1. Agendar consulta");
-            System.out.println("2. Cancelar consulta");
-            System.out.println("3. Listar médicos");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("""
+                    \n--- Menu do Paciente ---
+                    1. Agendar consulta
+                    2. Cancelar consulta
+                    3. Listar consultas de um paciente
+                    4. Listar médicos
+                    0. Sair
+                    Escolha uma opção:\s""");
             opcao = scanner.nextInt();
             scanner.nextLine(); // Limpa o buffer
 
@@ -157,6 +177,9 @@ public class Main {
                     cancelarConsulta();
                     break;
                 case 3:
+                    listarConsultas();
+                    break;
+                case 4:
                     listarMedicos();
                     break;
                 case 0:
@@ -169,20 +192,39 @@ public class Main {
     }
 
     private static void cadastrarMedico() {
+        String nome, email, endereco, telefone, crm;
+        Especialidade especialidade;
+
         System.out.print("Nome do médico: ");
-        String nome = scanner.nextLine();
+        nome = scanner.nextLine();
         System.out.print("Email do médico: ");
-        String email = scanner.nextLine();
-        System.out.print("Endereço do médico (Rua, número, bairro, cidade): ");
-        String endereco = scanner.nextLine();
+        email = scanner.nextLine();
+        System.out.print("Endereço do médico (Rua - número - bairro - cidade): ");
+        endereco = scanner.nextLine();
         System.out.print("Telefone do médico: ");
-        String telefone = scanner.nextLine();
+        telefone = scanner.nextLine();
         System.out.print("CRM do médico: ");
-        String crm = scanner.nextLine();
+        crm = scanner.nextLine();
         System.out.print("Especialidade do médico: ");
-        Especialidade especialidade = Especialidade.valueOf(scanner.nextLine());
+        try {
+            especialidade = Especialidade.fromString(scanner.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         Medico medico = new Medico(nome, email, endereco, telefone, crm, especialidade);
+
+        // Valida a entidade médico
+        Set<ConstraintViolation<Medico>> violations = validator.validate(medico);
+
+        if (!violations.isEmpty()) {
+            System.out.println("Erros encontrados:");
+            for (ConstraintViolation<Medico> violation : violations) {
+                System.out.println("- " + violation.getMessage());
+            }
+            return; // Interrompe o fluxo se houver erros
+        }
 
         medicos.add(medico);
         MedicoRepository.salvarMedicos(medicos);
@@ -190,18 +232,31 @@ public class Main {
     }
 
     private static void cadastrarPaciente() {
+        String nome, email, endereco, telefone, cpf;
+
         System.out.print("Nome do paciente: ");
-        String nome = scanner.nextLine();
+        nome = scanner.nextLine();
         System.out.print("Email do paciente: ");
-        String email = scanner.nextLine();
-        System.out.print("Endereço do paciente (Rua, número, bairro, cidade): ");
-        String endereco = scanner.nextLine();
+        email = scanner.nextLine();
+        System.out.print("Endereço do paciente (Rua - número - bairro - cidade): ");
+        endereco = scanner.nextLine();
         System.out.print("Telefone do paciente: ");
-        String telefone = scanner.nextLine();
+        telefone = scanner.nextLine();
         System.out.print("CPF do paciente: ");
-        String cpf = scanner.nextLine();
+        cpf = scanner.nextLine();
 
         Paciente paciente = new Paciente(nome, email, endereco, telefone, cpf);
+
+        // Valida a entidade paciente
+        Set<ConstraintViolation<Paciente>> violations = validator.validate(paciente);
+
+        if (!violations.isEmpty()) {
+            System.out.println("Erros encontrados:");
+            for (ConstraintViolation<Paciente> violation : violations) {
+                System.out.println("- " + violation.getMessage());
+            }
+            return; // Interrompe o fluxo se houver erros
+        }
 
         pacientes.add(paciente);
         PacienteRepository.salvarPacientes(pacientes);
@@ -209,27 +264,132 @@ public class Main {
     }
 
     private static void listarMedicos() {
+        // Chama o método carregarMedicos para obter a lista de médicos
+        MedicoRepository.carregarMedicos();
 
+        if (medicos.isEmpty()) {
+            System.out.println("Nenhum médico encontrado.");
+        } else {
+            System.out.println("Lista de Médicos:");
+            for (Medico medico : medicos) {
+                System.out.println(medico.toString());
+            }
+        }
     }
 
     private static void listarPacientes() {
+        PacienteRepository.carregarPacientes();
 
+        if (pacientes.isEmpty()){
+            System.out.println("Nenhum paciente encontrado.");
+        } else {
+            System.out.println("Lista de Pacientes:");
+            for (Paciente paciente : pacientes) {
+                System.out.println(paciente.toString());
+            }
+        }
     }
 
-    private static void atualizarMedico(){
+    private static void listarConsultas() {
+        // Solicitar o nome do paciente para filtrar as consultas
+        System.out.print("Digite o nome do paciente: ");
+        String nomePaciente = scanner.nextLine();
 
+        // Listar todas as consultas do paciente
+        List<Consulta> consultasDoPaciente = consultaRepository.listarConsultasDoPaciente(nomePaciente);
+
+        if (consultasDoPaciente.isEmpty()) {
+            System.out.println("Nenhuma consulta encontrada para o paciente " + nomePaciente + ".");
+        } else {
+            System.out.println("Consultas do paciente " + nomePaciente + ":");
+            for (Consulta consulta : consultasDoPaciente) {
+                System.out.println(consulta.toString());
+            }
+        }
+    }
+
+    private static void atualizarMedico() {
+        // Solicita o CRM do médico
+        System.out.print("Digite o CRM do médico que deseja atualizar: ");
+        String crm = scanner.nextLine().trim();
+
+        // Verifica se o médico existe
+        Medico medico = MedicoRepository.buscarMedicoPorCrm(crm);
+        if (medico == null) {
+            System.out.println("Médico com CRM " + crm + " não encontrado.");
+            return;
+        }
+
+        // Exibe os dados atuais do médico
+        System.out.println("Dados atuais do médico:" +
+                "\nNome: " + medico.getNome() +
+                "\nTelefone: " + medico.getTelefone() +
+                "\nEndereço: " + medico.getEndereco());
+
+        // Solicita os novos dados ao usuário
+        System.out.println("Digite os novos dados (pressione Enter para manter os atuais):");
+        System.out.print("Novo nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Novo telefone: ");
+        String telefone = scanner.nextLine();
+        System.out.print("Novo endereço: ");
+        String endereco = scanner.nextLine();
+
+        // Chama o método do repositório para atualizar o médico
+        MedicoRepository.atualizarMedico(crm, nome, telefone, endereco);
+        System.out.println("Dados do médico atualizados com sucesso.");
     }
 
     private static void atualizarPaciente(){
+        // Solicita o CPF do médico
+        System.out.print("Digite o CPF do paciente que deseja atualizar: ");
+        String cpf = scanner.nextLine().trim();
 
+        // Verifica se o médico existe
+        Paciente paciente = PacienteRepository.buscarPacientePorCpf(cpf);
+        if (paciente == null) {
+            System.out.println("Paciente com CPF " + cpf + " não encontrado.");
+            return;
+        }
+
+        // Exibe os dados atuais do médico
+        System.out.println("Dados atuais do paciente:" +
+                "\nNome: " + paciente.getNome() +
+                "\nTelefone: " + paciente.getTelefone() +
+                "\nEndereço: " + paciente.getEndereco());
+
+        // Solicita os novos dados ao usuário
+        System.out.println("Digite os novos dados (pressione Enter para manter os atuais):");
+        System.out.print("Novo nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Novo telefone: ");
+        String telefone = scanner.nextLine();
+        System.out.print("Novo endereço: ");
+        String endereco = scanner.nextLine();
+
+        // Chama o método do repositório para atualizar o médico
+        PacienteRepository.atualizarPaciente(cpf, nome, telefone, endereco);
+        System.out.println("Dados do paciente atualizados com sucesso.");
     }
 
-    private static void excluirMedico(){
+    private static void excluirMedico() {
+        // Solicita o CRM do médico que deseja excluir
+        System.out.print("Digite o CRM do médico que deseja excluir: ");
+        String crm = scanner.nextLine().trim();
 
+        // Chama o método do repositório para excluir o médico
+        MedicoRepository.excluirMedico(crm);
+        System.out.println("Médico com CRM " + crm + " excluído com sucesso.");
     }
 
     private static void excluirPaciente(){
+        // Solicita o CPF do paciente que deseja excluir
+        System.out.print("Digite o CPF do paciente que deseja excluir: ");
+        String cpf = scanner.nextLine().trim();
 
+        // Chama o método do repositório para excluir o paciente
+        PacienteRepository.excluirPaciente(cpf);
+        System.out.println("Paciente com CPF " + cpf + " excluído com sucesso.");
     }
 
     private static void agendarConsulta() {
@@ -303,8 +463,19 @@ public class Main {
             return; // Interrompe o agendamento se houver erro
         }
 
-        // Criar a consulta e salvar
+        // Criar a  entidade consulta
         Consulta consulta = new Consulta(null, nomeMedico, nomePaciente, especialidade, data);
+
+        // Valida a entidade consulta
+        Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
+
+        if (!violations.isEmpty()) {
+            System.out.println("Erros encontrados:");
+            for (ConstraintViolation<Consulta> violation : violations) {
+                System.out.println("- " + violation.getMessage());
+            }
+            return; // Interrompe o fluxo se houver erros
+        }
 
         // Carrega as consultas existentes
         consultas.add(consulta); // Adiciona a nova consulta
@@ -314,26 +485,10 @@ public class Main {
     }
 
     private static void cancelarConsulta() {
-        String nomePaciente;
         Long id;
 
-        // Solicitar o nome do paciente para filtrar as consultas
-        System.out.print("Digite o nome do paciente: ");
-        nomePaciente = scanner.nextLine();
-
-        // Listar todas as consultas do paciente
-        List<Consulta> consultasDoPaciente = consultaRepository.listarConsultasDoPaciente(nomePaciente);
-
-        if (consultasDoPaciente.isEmpty()) {
-            System.out.println("Nenhuma consulta encontrada para o paciente " + nomePaciente + ".");
-            return;
-        }
-
-        System.out.println("Consultas do paciente " + nomePaciente + ":");
-        for (Consulta consulta : consultasDoPaciente) {
-            System.out.println("ID: " + consulta.getId() + ", Medico: " + consulta.getNomeMedico() +
-                    ", Especialidade: " + consulta.getEspecialidade() + ", Data: " + consulta.getData());
-        }
+        // Método para listar as consultas de um determinado paciente
+        listarConsultas();
 
         // Capturar o ID da consulta para cancelar
         System.out.print("Digite o ID da consulta para cancelar: ");

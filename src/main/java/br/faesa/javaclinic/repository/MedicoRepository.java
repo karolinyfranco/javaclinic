@@ -33,8 +33,14 @@ public class MedicoRepository {
     public static void salvarMedicos(List<Medico> medicos) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_MEDICOS))) {
             for (Medico m : medicos) {
-                writer.write(m.getNome() + ";" + m.getEmail() + ";" + m.getEndereco() + ";" + m.getTelefone() + ";" + m.getCrm() + ";" + m.getEspecialidade() +"\n");
+                writer.write(m.getNome() + ";" +
+                        m.getEmail() + ";" +
+                        m.getEndereco() + ";" +
+                        m.getTelefone() + ";" +
+                        m.getCrm() + ";" +
+                        m.getEspecialidade().name() +"\n");
             }
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,9 +55,9 @@ public class MedicoRepository {
                 if (dados.length == 6) { // Verifica se há exatamente 6 partes (ajustar de acordo com a quantidade de atributos)
                     String nome = dados[0].trim();
                     String email = dados[1].trim();
-                    String crm = dados[2].trim();
-                    String endereco = dados[3].trim();
-                    String telefone = dados[4].trim();
+                    String endereco = dados[2].trim();
+                    String telefone = dados[3].trim();
+                    String crm = dados[4].trim();
                     Especialidade especialidade = Especialidade.valueOf(dados[5].trim().toUpperCase()); // Converte dados[5] para o tipo enum Especialidade
 
                     // Adiciona um novo objeto Medico com os valores convertidos
@@ -65,19 +71,27 @@ public class MedicoRepository {
     }
 
     public static void atualizarMedico(String crm, String nome, String telefone, String endereco) {
-        List<Medico> medicos = carregarMedicos();
-        Medico medico = buscarMedicoPorCrm(crm);
+        List<Medico> medicos = carregarMedicos(); // Carrega todos os médicos do arquivo
+        Medico medico = null;
+
+        // Procura o médico na lista
+        for (Medico m : medicos) {
+            if (m.getCrm().equals(crm)) {
+                medico = m;  // Atualiza o objeto 'medico' com o médico encontrado
+                break;  // Encontra o médico e sai do loop
+            }
+        }
+
         if (medico != null) {
-            // Atualiza as informações do médico
+            System.out.println("Antes da atualização: " + medico);
             medico.atualizar(nome, telefone, endereco);
-            salvarMedicos(medicos); // Método para salvar a lista de médicos novamente no arquivo
+            System.out.println("Depois da atualização: " + medico);
+            salvarMedicos(medicos);
         }
     }
-    /* Uso:
-    MedicoRepository.atualizarMedico("CRM1234", "Novo Nome", "27992978669", "Novo Endereço");*/
 
     // Método para excluir um médico
-    public void excluirMedico(String crm) {
+    public static void excluirMedico(String crm) {
         List<Medico> medicos = carregarMedicos();
         Medico medico = buscarMedicoPorCrm(crm);
         if (medico != null) {
@@ -85,7 +99,4 @@ public class MedicoRepository {
             salvarMedicos(medicos); // Salva os médicos restantes no arquivo
         }
     }
-    /*Uso:
-    MedicoRepository.excluirMedico("CRM1234");*/
-
 }

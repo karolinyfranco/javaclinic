@@ -1,9 +1,17 @@
 package br.faesa.javaclinic.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 import java.util.Objects;
 
 public class Medico extends Pessoa{
+    @NotBlank(message = "CRM é obrigatório")
+    @Pattern(regexp = "\\d{4,6}", message = "Formato do CRM é inválido") //a expressão regular \d{4,6} corresponde a sequências de 4 a 6 dígitos consecutivos
     private String crm;
+
+    @NotNull(message = "Especialidade é obrigatória")
     private Especialidade especialidade;
 
     public Medico(String nome, String email, String endereco, String telefone, String crm, Especialidade especialidade) {
@@ -49,9 +57,9 @@ public class Medico extends Pessoa{
 
     @Override
     public String toString() {
-        return "Medico{" + super.toString() +
-                "crm='" + crm + '\'' +
-                ", especialidade=" + especialidade +
-                '}';
+        return "---------------------" + "\n"
+                + super.toString() +
+                "CRM: " + crm + "\n" +
+                "Especialidade: " + especialidade;
     }
 }

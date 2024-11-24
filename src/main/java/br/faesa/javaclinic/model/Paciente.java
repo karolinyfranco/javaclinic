@@ -1,8 +1,13 @@
 package br.faesa.javaclinic.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 import java.util.Objects;
 
 public class Paciente extends Pessoa{
+    @NotBlank(message = "CPF é obrigatório")
+    @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}", message = "Formato do CPF é inválido")
     private String cpf;
 
     public Paciente(String nome, String email, String endereco, String telefone, String cpf) {
@@ -38,8 +43,8 @@ public class Paciente extends Pessoa{
 
     @Override
     public String toString() {
-        return "Paciente{" + super.toString() +
-                "cpf='" + cpf + '\'' +
-                '}';
+        return "---------------------" + "\n"
+                + super.toString() +
+                "CPF: " + cpf;
     }
 }

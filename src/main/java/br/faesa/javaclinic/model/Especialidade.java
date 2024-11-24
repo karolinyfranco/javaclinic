@@ -5,13 +5,15 @@ public enum Especialidade {
     PEDIATRIA,
     CARDIOLOGIA,
     GINECOLOGIA,
-    DERMATOLOGIA;
+    DERMATOLOGIA,
+    PSIQUIATRIA,
+    OFTALMOLOGIA;
 
     public static Especialidade fromString(String value) {
         try {
             return Especialidade.valueOf(value.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Especialidade inválida: " + value);
+            throw new IllegalArgumentException("Especialidade inválida.");
         }
     }
 }
