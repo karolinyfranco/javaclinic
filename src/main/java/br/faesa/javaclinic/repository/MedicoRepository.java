@@ -2,10 +2,12 @@ package br.faesa.javaclinic.repository;
 
 import br.faesa.javaclinic.model.Especialidade;
 import br.faesa.javaclinic.model.Medico;
+import br.faesa.javaclinic.model.Paciente;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MedicoRepository {
     private static final String PATH_MEDICOS = "C:" + File.separator + "Users" + File.separator + "luana" + File.separator + "Persistencia" + File.separator + "medicos.txt";
@@ -31,18 +33,21 @@ public class MedicoRepository {
     }
 
     public static void salvarMedicos(List<Medico> medicos) {
+        List<Medico> medicosUnicos = medicos.stream()
+                .distinct()
+                .collect(Collectors.toList()); // Remove duplicatas
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_MEDICOS))) {
-            for (Medico m : medicos) {
+            for (Medico m : medicosUnicos) {
                 writer.write(m.getNome() + ";" +
                         m.getEmail() + ";" +
                         m.getEndereco() + ";" +
                         m.getTelefone() + ";" +
                         m.getCrm() + ";" +
-                        m.getEspecialidade().name() +"\n");
+                        m.getEspecialidade().name());
+                writer.newLine();
             }
-            writer.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar médicos: " + e.getMessage());
         }
     }
 
@@ -65,7 +70,7 @@ public class MedicoRepository {
                 }
             }
         } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao carregar médicos: " + e.getMessage());
         }
         return medicos;
     }
@@ -77,7 +82,7 @@ public class MedicoRepository {
         // Procura o médico na lista
         for (Medico m : medicos) {
             if (m.getCrm().equals(crm)) {
-                medico = m;  // Atualiza o objeto 'medico' com o médico encontrado
+                medico = m;  // Atualiza o objeto 'médico' com o médico encontrado
                 break;  // Encontra o médico e sai do loop
             }
         }
@@ -86,7 +91,7 @@ public class MedicoRepository {
             System.out.println("Antes da atualização: " + medico);
             medico.atualizar(nome, telefone, endereco);
             System.out.println("Depois da atualização: " + medico);
-            salvarMedicos(medicos);
+            salvarMedicos(medicos); // Salva os médicos restantes no arquivo
         }
     }
 
@@ -94,9 +99,12 @@ public class MedicoRepository {
     public static void excluirMedico(String crm) {
         List<Medico> medicos = carregarMedicos();
         Medico medico = buscarMedicoPorCrm(crm);
+
         if (medico != null) {
             medicos.remove(medico);
             salvarMedicos(medicos); // Salva os médicos restantes no arquivo
+        } else {
+            System.out.println("Médico com CRM " + crm + " não encontrado.");
         }
     }
 }

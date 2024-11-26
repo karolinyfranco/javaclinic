@@ -5,17 +5,24 @@ import br.faesa.javaclinic.service.Usuario;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsuarioRepository {
     private static final String PATH_USUARIOS = "C:" + File.separator + "Users" + File.separator + "luana" + File.separator + "Persistencia" + File.separator + "usuarios.txt";
 
     public static void salvarUsuarios(List<Usuario> usuarios) {
+        List<Usuario> usuariosUnicos = usuarios.stream()
+                .distinct()
+                .collect(Collectors.toList()); // Remove duplicatas
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_USUARIOS))) {
-            for (Usuario u : usuarios) {
-                writer.write(u.getUsuario() + ";" + u.getSenha() + ";" + u.getTipo() + "\n");
+            for (Usuario u : usuariosUnicos) {
+                writer.write(u.getUsuario() + ";"
+                        + u.getSenha() + ";"
+                        + u.getTipo());
+                writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar usuários: " + e.getMessage());
         }
     }
 
@@ -32,7 +39,7 @@ public class UsuarioRepository {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao carregar usuários: " + e.getMessage());
         }
         return usuarios;
     }

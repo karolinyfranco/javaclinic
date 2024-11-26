@@ -1,11 +1,11 @@
 package br.faesa.javaclinic.repository;
 
-import br.faesa.javaclinic.model.Medico;
 import br.faesa.javaclinic.model.Paciente;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PacienteRepository {
     private static final String PATH_PACIENTES = "C:" + File.separator + "Users" + File.separator + "luana" + File.separator + "Persistencia" + File.separator + "pacientes.txt";
@@ -21,16 +21,20 @@ public class PacienteRepository {
     }
 
     public static void salvarPacientes(List<Paciente> pacientes) {
+        List<Paciente> pacientesUnicos = pacientes.stream()
+                .distinct()
+                .collect(Collectors.toList()); // Remove duplicatas
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_PACIENTES))) {
-            for (Paciente p : pacientes) {
+            for (Paciente p : pacientesUnicos) {
                 writer.write(p.getNome() + ";" +
                         p.getEmail() + ";" +
                         p.getEndereco() + ";" +
                         p.getTelefone() + ";" +
-                        p.getCpf() +"\n");
+                        p.getCpf());
+                writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar pacientes: " + e.getMessage());
         }
     }
 
@@ -40,19 +44,24 @@ public class PacienteRepository {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 String[] dados = linha.split(";\\s*"); // Expressão regular para encontrar ';' seguidos de possíveis espaços em branco
-                if (dados.length == 5) { // Verifica se há exatamente 5 partes
-                    String nome = dados[0].trim();
-                    String email = dados[1].trim();
-                    String endereco = dados[2].trim();
-                    String telefone = dados[3].trim();
-                    String cpf = dados[4].trim();
+                if (dados.length == 5) {
+                    try {
+                        String nome = dados[0].trim();
+                        String email = dados[1].trim();
+                        String endereco = dados[2].trim();
+                        String telefone = dados[3].trim();
+                        String cpf = dados[4].trim();
 
-                    // Adiciona um novo objeto Paciente com os valores convertidos
-                    pacientes.add(new Paciente(nome, email, endereco, telefone, cpf));
+                        pacientes.add(new Paciente(nome, email, endereco, telefone, cpf));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Erro ao processar linha: " + linha);
+                    }
+                } else {
+                    System.out.println("Linha inválida ignorada: " + linha);
                 }
             }
-        } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar pacientes: " + e.getMessage());
         }
         return pacientes;
     }
@@ -64,7 +73,7 @@ public class PacienteRepository {
         // Procura o paciente na lista
         for (Paciente p : pacientes) {
             if (p.getCpf().equals(cpf)) {
-                paciente = p;  // Atualiza o objeto 'paciente' com o médico encontrado
+                paciente = p;  // Atualiza o objeto 'paciente' com o paciente encontrado
                 break;  // Encontra o paciente e sai do loop
             }
         }
@@ -78,11 +87,14 @@ public class PacienteRepository {
     }
 
     public static void excluirPaciente(String cpf) {
-        List<Paciente> pacientes = carregarPacientes();
-        Paciente paciente = buscarPacientePorCpf(cpf);
+        List<Paciente> pacientes = carregarPacientes(); // Carrega os pacientes do arquivo
+        Paciente paciente = buscarPacientePorCpf(cpf); // Encontra o paciente pelo CPF
+
         if (paciente != null) {
-            pacientes.remove(paciente);
-            salvarPacientes(pacientes); // Salva os pacientes restantes no arquivo
+            pacientes.remove(paciente); // Remove o paciente da lista
+            salvarPacientes(pacientes); // Salva a lista atualizada
+        } else {
+            System.out.println("Paciente com CPF " + cpf + " não encontrado.");
         }
     }
 }

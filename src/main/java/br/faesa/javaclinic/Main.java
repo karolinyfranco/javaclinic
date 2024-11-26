@@ -25,7 +25,6 @@ import java.util.Set;
 
 public class Main {
     private static ConsultaRepository consultaRepository = new ConsultaRepository();
-    private static List<Usuario> usuariosList = UsuarioRepository.carregarUsuarios();
     private static List<Medico> medicosList = MedicoRepository.carregarMedicos();
     private static List<Paciente> pacientesList = PacienteRepository.carregarPacientes();
     private static List<Consulta> consultasList = ConsultaRepository.carregarConsultas();
@@ -65,6 +64,7 @@ public class Main {
     }
 
     private static void cadastrarUsuario() {
+        List<Usuario> usuariosList = UsuarioRepository.carregarUsuarios();
         System.out.println("\n--- Cadastro de Novo Usuário ---");
         System.out.print("Digite o nome de usuário (sem espaços): ");
         String usuario = scanner.nextLine();
@@ -91,7 +91,6 @@ public class Main {
         usuariosList.add(novoUsuario);  // Adiciona o novo usuário à lista
         // Salva a lista de usuários no arquivo
         UsuarioRepository.salvarUsuarios(usuariosList);
-
         System.out.println("Novo usuário cadastrado com sucesso!");
     }
 
@@ -202,6 +201,7 @@ public class Main {
     }
 
     private static void cadastrarMedico() {
+        medicosList = MedicoRepository.carregarMedicos();
         String nome, email, endereco, telefone, crm;
         Especialidade especialidade;
 
@@ -256,6 +256,7 @@ public class Main {
     }
 
     private static void cadastrarPaciente() {
+        pacientesList = PacienteRepository.carregarPacientes();
         String nome, email, endereco, telefone, cpf;
 
         System.out.print("Nome do paciente: ");
@@ -295,7 +296,7 @@ public class Main {
 
     private static void listarMedicos() {
         // Chama o método carregarMedicos para obter a lista de médicos
-        MedicoRepository.carregarMedicos();
+        medicosList = MedicoRepository.carregarMedicos();
 
         // Se a lista de médicos não estiver vazia, lista as informações de todos os médicos
         if (medicosList.isEmpty()) {
@@ -314,7 +315,7 @@ public class Main {
 
     private static void listarPacientes() {
         // Chama o método carregarPacientes para obter a lista de pacientes
-        PacienteRepository.carregarPacientes();
+        pacientesList = PacienteRepository.carregarPacientes();
 
         // Se a lista de pacientes não estiver vazia, lista as informações de todos os pacientes
         if (pacientesList.isEmpty()){
@@ -346,6 +347,7 @@ public class Main {
     }
 
     private static void atualizarMedico() {
+        medicosList = MedicoRepository.carregarMedicos();
         System.out.print("Digite o CRM do médico que deseja atualizar: ");
         String crm = scanner.nextLine().trim();
 
@@ -373,10 +375,12 @@ public class Main {
 
         // Chama o método do repositório para atualizar o médico
         MedicoRepository.atualizarMedico(crm, nome, telefone, endereco);
+        medicosList = MedicoRepository.carregarMedicos();
         System.out.println("Dados do médico atualizados com sucesso.");
     }
 
     private static void atualizarPaciente(){
+        pacientesList = PacienteRepository.carregarPacientes();
         System.out.print("Digite o CPF do paciente que deseja atualizar: ");
         String cpf = scanner.nextLine().trim();
 
@@ -404,28 +408,34 @@ public class Main {
 
         // Chama o método do repositório para atualizar o médico
         PacienteRepository.atualizarPaciente(cpf, nome, telefone, endereco);
+        pacientesList = PacienteRepository.carregarPacientes();
         System.out.println("Dados do paciente atualizados com sucesso.");
     }
 
     private static void excluirMedico() {
+        medicosList = MedicoRepository.carregarMedicos(); // Atualiza a lista antes
         System.out.print("Digite o CRM do médico que deseja excluir: ");
         String crm = scanner.nextLine().trim();
 
         // Chama o método do repositório para excluir o médico
         MedicoRepository.excluirMedico(crm);
+        medicosList = MedicoRepository.carregarMedicos(); // Atualiza a lista após exclusão
         System.out.println("Médico com CRM " + crm + " excluído com sucesso.");
     }
 
     private static void excluirPaciente(){
+        pacientesList = PacienteRepository.carregarPacientes();
         System.out.print("Digite o CPF do paciente que deseja excluir: ");
         String cpf = scanner.nextLine().trim();
 
         // Chama o método do repositório para excluir o paciente
         PacienteRepository.excluirPaciente(cpf);
+        pacientesList = PacienteRepository.carregarPacientes();
         System.out.println("Paciente com CPF " + cpf + " excluído com sucesso.");
     }
 
     private static void agendarConsulta() {
+        consultasList = ConsultaRepository.carregarConsultas();
         String nomeMedico, nomePaciente;
         Especialidade especialidade;
         LocalDateTime data;
@@ -517,6 +527,7 @@ public class Main {
     }
 
     private static void cancelarConsulta() {
+        consultasList = ConsultaRepository.carregarConsultas();
         Long id;
 
         // Método para listar as consultas de um determinado paciente
@@ -538,6 +549,7 @@ public class Main {
 
         // Chama o método para cancelar a consulta
         ConsultaRepository.cancelarConsulta(id);
+        consultasList = ConsultaRepository.carregarConsultas();
         System.out.println("Consulta com ID " + id + " foi cancelada com sucesso.");
     }
 }

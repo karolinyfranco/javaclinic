@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LoginService {
-    private static List<Usuario> usuariosList = UsuarioRepository.carregarUsuarios();  // Método para carregar dados dos usuários
     private static Scanner scanner = new Scanner(System.in);
 
     public static Usuario fazerLogin() {
+        // Método para carregar dados dos usuários
+        List<Usuario> usuariosList = UsuarioRepository.carregarUsuarios();
         System.out.print("Digite seu nome de usuário: ");
         String usuario = scanner.nextLine();
         System.out.print("Digite sua senha: ");

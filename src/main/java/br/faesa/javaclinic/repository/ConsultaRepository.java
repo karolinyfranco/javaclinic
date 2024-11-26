@@ -32,7 +32,7 @@ public class ConsultaRepository {
                 .anyMatch(consulta -> consulta.getNomeMedico().equalsIgnoreCase(nomeMedico) && consulta.getData().equals(data));
     }
 
-    public Consulta buscarConsultaPorId(Long id) {
+    public static Consulta buscarConsultaPorId(Long id) {
         List<Consulta> consultas = carregarConsultas();
         for (Consulta consulta : consultas) {
             if (consulta.getId().equals(id)) {
@@ -60,10 +60,10 @@ public class ConsultaRepository {
         return medicosDisponiveis;
     }
 
-    public static void agendarConsultas(List<Consulta> novasConsultas) {
+    public static void agendarConsultas(List<Consulta> consultas) {
         List<Consulta> consultasExistentes = carregarConsultas(); // Carrega as consultas já existentes
         // Adiciona as novas consultas, verificando se já não estão na lista
-        for (Consulta novaConsulta : novasConsultas) {
+        for (Consulta novaConsulta : consultas) {
             boolean consultaDuplicada = consultasExistentes.stream()
                     .anyMatch(c -> c.getId().equals(novaConsulta.getId())); // Verifica duplicação pelo ID
             if (!consultaDuplicada) {
@@ -82,11 +82,11 @@ public class ConsultaRepository {
                                 c.getNomeMedico() + ";" +
                                 c.getNomePaciente() + ";" +
                                 c.getEspecialidade().name() + ";" +
-                                c.getData() + "\n"
-                );
+                                c.getData());
+                writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar consultas: " + e.getMessage());
         }
     }
 
@@ -119,7 +119,7 @@ public class ConsultaRepository {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao carregar consultas: " + e.getMessage());
         }
         return consultas;
     }
@@ -135,7 +135,6 @@ public class ConsultaRepository {
             System.out.println("Consulta com ID " + id + " não encontrada.");
             return;
         }
-
         // Regrava as consultas no arquivo
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_CONSULTAS))) {
             for (Consulta consulta : consultas) {
