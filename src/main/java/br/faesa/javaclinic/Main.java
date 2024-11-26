@@ -264,12 +264,9 @@ public class Main {
         cpf = scanner.nextLine();
 
         // Verifica se o CPF já está em uso
-        List<Paciente> pacientesExistentes = PacienteRepository.carregarPacientes(); // Carrega pacientes já cadastrados
-        boolean cpfDuplicado = pacientesExistentes.stream().anyMatch(p -> p.getCpf().equals(cpf));
-
-        if (cpfDuplicado) {
+        if (PacienteRepository.buscarPacientePorCpf(cpf) != null) {
             System.out.println("Erro: O CPF " + cpf + " já está em uso.");
-            return; // Interrompe o fluxo se o CPF já existe
+            return;
         }
 
         Paciente paciente = new Paciente(nome, email, endereco, telefone, cpf);
