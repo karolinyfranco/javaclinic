@@ -51,8 +51,8 @@ public class MedicoRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader(PATH_MEDICOS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] dados = linha.split(";\\s*"); // Usa uma expressão regular para ignorar espaços ao redor da vírgula
-                if (dados.length == 6) { // Verifica se há exatamente 6 partes (ajustar de acordo com a quantidade de atributos)
+                String[] dados = linha.split(";\\s*"); // Expressão regular para encontrar ';' seguidos de possíveis espaços em branco
+                if (dados.length == 6) { // Verifica se há exatamente 6 partes
                     String nome = dados[0].trim();
                     String email = dados[1].trim();
                     String endereco = dados[2].trim();

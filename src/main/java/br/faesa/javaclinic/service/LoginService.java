@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LoginService {
-    private static final List<Usuario> usuarios = UsuarioRepository.carregarUsuarios();  // Método para carregar dados dos usuários
-    private static final Scanner scanner = new Scanner(System.in);
+    private static List<Usuario> usuariosList = UsuarioRepository.carregarUsuarios();  // Método para carregar dados dos usuários
+    private static Scanner scanner = new Scanner(System.in);
 
     public static Usuario fazerLogin() {
         System.out.print("Digite seu nome de usuário: ");
@@ -15,7 +15,7 @@ public class LoginService {
         System.out.print("Digite sua senha: ");
         String senha = scanner.nextLine();
 
-        for (Usuario u : usuarios) {
+        for (Usuario u : usuariosList) {
             if (u.autenticar(usuario, senha)) {
                 System.out.println("Login bem-sucedido!");
                 return u;

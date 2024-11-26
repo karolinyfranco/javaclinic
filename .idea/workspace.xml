@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="880a8861-866c-4f88-b594-c7cde3e712b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/br/faesa/javaclinic/main/AtualizarMedicoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/br/faesa/javaclinic/main/CadastroMedicoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/br/faesa/javaclinic/main/CadastroPacienteTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/br/faesa/javaclinic/main/CancelamentoConsultaTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,10 +55,23 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/luana/OneDrive/Documentos/Estudos Programação/ONE ALURA/Spring Boot/api"
+    "last_opened_file_path": "C:/Users/luana/OneDrive/Documentos/Estudos Programação/ONE ALURA/Spring Boot/screenmatch-com-jpa"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.AtualizarMedicoTest.testAtualizarNomeMedicoComSucesso">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.faesa.javaclinic.Main" />
+      <module name="java-clinic" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.faesa.javaclinic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AtualizarMedicoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="java-clinic" />
       <extension name="coverage">
@@ -120,28 +133,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CancelamentoConsultaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="java-clinic" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="br.faesa.javaclinic.main.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="br.faesa.javaclinic.main" />
-      <option name="MAIN_CLASS_NAME" value="br.faesa.javaclinic.main.CancelamentoConsultaTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.AtualizarMedicoTest.testAtualizarNomeMedicoComSucesso" />
         <item itemvalue="JUnit.CadastroMedicoTest" />
         <item itemvalue="JUnit.CadastroMedicoMockTest" />
         <item itemvalue="JUnit.AtualizarMedicoTest" />
-        <item itemvalue="JUnit.CancelamentoConsultaTest" />
       </list>
     </recent_temporary>
   </component>

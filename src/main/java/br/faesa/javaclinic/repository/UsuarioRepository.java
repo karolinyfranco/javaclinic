@@ -24,9 +24,11 @@ public class UsuarioRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader(PATH_USUARIOS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] dados = linha.split(";\\s*"); // Usa uma expressão regular para ignorar espaços ao redor da vírgula
+                String[] dados = linha.split(";\\s*"); // Expressão regular para encontrar ';' seguidos de possíveis espaços em branco
                 if (dados.length == 3) { // Verifica se há exatamente 3 partes
-                    usuarios.add(new Usuario(dados[0].trim(), dados[1].trim(), dados[2].charAt(0)));
+                    usuarios.add(new Usuario(dados[0].trim(),
+                            dados[1].trim(),
+                            dados[2].charAt(0)));
                 }
             }
         } catch (IOException e) {

@@ -23,7 +23,11 @@ public class PacienteRepository {
     public static void salvarPacientes(List<Paciente> pacientes) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_PACIENTES))) {
             for (Paciente p : pacientes) {
-                writer.write(p.getNome() + ";" + p.getEmail() + ";" + p.getEndereco() + ";" + p.getTelefone() + ";" + p.getCpf() +"\n");
+                writer.write(p.getNome() + ";" +
+                        p.getEmail() + ";" +
+                        p.getEndereco() + ";" +
+                        p.getTelefone() + ";" +
+                        p.getCpf() +"\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,8 +39,8 @@ public class PacienteRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader(PATH_PACIENTES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] dados = linha.split(";\\s*"); // Usa uma expressão regular para ignorar espaços ao redor da vírgula
-                if (dados.length == 5) { // Verifica se há exatamente 6 partes (ajustar de acordo com a quantidade de atributos)
+                String[] dados = linha.split(";\\s*"); // Expressão regular para encontrar ';' seguidos de possíveis espaços em branco
+                if (dados.length == 5) { // Verifica se há exatamente 5 partes
                     String nome = dados[0].trim();
                     String email = dados[1].trim();
                     String endereco = dados[2].trim();
@@ -54,14 +58,14 @@ public class PacienteRepository {
     }
 
     public static void atualizarPaciente(String cpf, String nome, String telefone, String endereco) {
-        List<Paciente> pacientes = carregarPacientes(); // Carrega todos os médicos do arquivo
+        List<Paciente> pacientes = carregarPacientes(); // Carrega todos os pacientes do arquivo
         Paciente paciente = null;
 
-        // Procura o médico na lista
+        // Procura o paciente na lista
         for (Paciente p : pacientes) {
             if (p.getCpf().equals(cpf)) {
-                paciente = p;  // Atualiza o objeto 'medico' com o médico encontrado
-                break;  // Encontra o médico e sai do loop
+                paciente = p;  // Atualiza o objeto 'paciente' com o médico encontrado
+                break;  // Encontra o paciente e sai do loop
             }
         }
 
@@ -78,7 +82,7 @@ public class PacienteRepository {
         Paciente paciente = buscarPacientePorCpf(cpf);
         if (paciente != null) {
             pacientes.remove(paciente);
-            salvarPacientes(pacientes); // Salva os médicos restantes no arquivo
+            salvarPacientes(pacientes); // Salva os pacientes restantes no arquivo
         }
     }
 }

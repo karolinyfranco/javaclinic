@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ConsultaRepository {
     private static final String PATH_CONSULTAS = "C:" + File.separator + "Users" + File.separator + "luana" + File.separator + "Persistencia" + File.separator + "consultas.txt";
-    private static long ultimoId = 0;
+    private static Long ultimoId = 0L;
 
     public List<Consulta> listarConsultasDoPaciente(String nomePaciente) {
         List<Consulta> consultas = carregarConsultas();
@@ -96,24 +96,21 @@ public class ConsultaRepository {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 try {
-                    String[] dados = linha.split(";\\s*");
-                    if (dados.length != 5) { // Apenas pule linhas inválidas
-                        System.out.println("Linha inválida encontrada: " + linha);
-                        continue;
-                    }
+                    String[] dados = linha.split(";\\s*"); // Expressão regular para encontrar ';' seguidos de possíveis espaços em branco
+                    if (dados.length == 5) { // Verifica se há exatamente 5 partes
+                        Long id = Long.parseLong(dados[0].trim());
+                        String nomeMedico = dados[1].trim();
+                        String nomePaciente = dados[2].trim();
+                        Especialidade especialidade = Especialidade.valueOf(dados[3].trim().toUpperCase());
+                        LocalDateTime data = LocalDateTime.parse(dados[4].trim());
 
-                    Long id = Long.parseLong(dados[0].trim());
-                    String nomeMedico = dados[1].trim();
-                    String nomePaciente = dados[2].trim();
-                    Especialidade especialidade = Especialidade.valueOf(dados[3].trim().toUpperCase());
-                    LocalDateTime data = LocalDateTime.parse(dados[4].trim());
+                        Consulta consulta = new Consulta(id, nomeMedico, nomePaciente, especialidade, data);
+                        consultas.add(consulta);
 
-                    Consulta consulta = new Consulta(id, nomeMedico, nomePaciente, especialidade, data);
-                    consultas.add(consulta);
-
-                    // Atualiza o maior ID encontrado
-                    if (id > ultimoId) {
-                        ultimoId = id;
+                        // Atualiza o maior ID encontrado
+                        if (id > ultimoId) {
+                            ultimoId = id;
+                        }
                     }
                 } catch (DateTimeParseException e) {
                     System.out.println("Erro ao interpretar a data/hora na linha: " + linha);
@@ -127,7 +124,7 @@ public class ConsultaRepository {
         return consultas;
     }
 
-    public void cancelarConsulta(Long id) {
+    public static void cancelarConsulta(Long id) {
         // Carrega as consultas existentes
         List<Consulta> consultas = carregarConsultas();
 
