@@ -349,7 +349,7 @@ public class Main {
     private static void atualizarMedico() {
         medicosList = MedicoRepository.carregarMedicos();
         System.out.print("Digite o CRM do médico que deseja atualizar: ");
-        String crm = scanner.nextLine().trim();
+        String crm = scanner.nextLine();
 
         // Verifica se o médico existe
         Medico medico = MedicoRepository.buscarMedicoPorCrm(crm);
@@ -415,7 +415,7 @@ public class Main {
     private static void excluirMedico() {
         medicosList = MedicoRepository.carregarMedicos(); // Atualiza a lista antes
         System.out.print("Digite o CRM do médico que deseja excluir: ");
-        String crm = scanner.nextLine().trim();
+        String crm = scanner.nextLine();
 
         // Chama o método do repositório para excluir o médico
         MedicoRepository.excluirMedico(crm);
@@ -424,13 +424,13 @@ public class Main {
     }
 
     private static void excluirPaciente(){
-        pacientesList = PacienteRepository.carregarPacientes();
+        pacientesList = PacienteRepository.carregarPacientes(); // Atualiza a lista antes
         System.out.print("Digite o CPF do paciente que deseja excluir: ");
         String cpf = scanner.nextLine().trim();
 
         // Chama o método do repositório para excluir o paciente
         PacienteRepository.excluirPaciente(cpf);
-        pacientesList = PacienteRepository.carregarPacientes();
+        pacientesList = PacienteRepository.carregarPacientes(); // Atualiza a lista após exclusão
         System.out.println("Paciente com CPF " + cpf + " excluído com sucesso.");
     }
 
@@ -439,9 +439,17 @@ public class Main {
         String nomeMedico, nomePaciente;
         Especialidade especialidade;
         LocalDateTime data;
+        Paciente pacienteCadastrado;
 
         System.out.print("Informe o nome do paciente: ");
         nomePaciente = scanner.nextLine();
+
+        // Busca se o nome do paciente fornecido consta no registro de cadastros
+        pacienteCadastrado = PacienteRepository.buscarPacientePorNome(nomePaciente);
+        if (pacienteCadastrado == null){
+            System.out.println("Paciente não encontrado no registro de cadastros.");
+            return;
+        }
 
         System.out.print("Deseja escolher um médico? (S/N): ");
         char escolha = scanner.next().charAt(0);
@@ -451,7 +459,7 @@ public class Main {
             System.out.print("Informe o nome do médico desejado: ");
             nomeMedico = scanner.nextLine();
 
-            // Buscar a especialidade do médico escolhido
+            // Busca a especialidade do médico escolhido
             especialidade = MedicoRepository.getEspecialidadeDoMedico(nomeMedico);
             if (especialidade == null) {
                 System.out.println("Médico não encontrado ou especialidade não associada.");
@@ -506,7 +514,7 @@ public class Main {
         }
 
         // Cria a entidade consulta
-        Consulta consulta = new Consulta(null, nomeMedico, nomePaciente, especialidade, data);
+        Consulta consulta = new Consulta(0, nomeMedico, nomePaciente, especialidade, data);
 
         // Valida a entidade consulta
         Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);

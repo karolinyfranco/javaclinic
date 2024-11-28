@@ -7,24 +7,28 @@ import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
 
 public class Medico extends Pessoa{
-    @NotBlank(message = "CRM é obrigatório")
-    @Pattern(regexp = "\\d{4,6}", message = "Formato do CRM é inválido") //a expressão regular \d{4,6} corresponde a sequências de 4 a 6 dígitos consecutivos
+    @NotBlank(message = "CRM é obrigatório") // Garante que o CRM não seja vazio
+    @Pattern(regexp = "^\\d{4,6}$", message = "Formato do CRM é inválido") //a expressão regular \d{4,6} corresponde a sequências de 4 a 6 dígitos consecutivos
     private String crm;
 
-    @NotNull(message = "Especialidade é obrigatória")
+    @NotNull(message = "Especialidade é obrigatória") // Garante que a especialidade não seja nula
     private Especialidade especialidade;
 
+    // Construtor com todos os parâmetros
     public Medico(String nome, String email, String endereco, String telefone, String crm, Especialidade especialidade) {
         super(nome, email, endereco, telefone);
         this.crm = crm;
         this.especialidade = especialidade;
     }
 
+    // Construtor sem argumentos, útil para a criação de instâncias sem dados iniciais
     public Medico() {
+        super("", "", "", "");
         this.crm = "";
         this.especialidade = null;
     }
 
+    // Métodos getters e setters
     public String getCrm() {
         return crm;
     }
@@ -41,6 +45,7 @@ public class Medico extends Pessoa{
         this.especialidade = especialidade;
     }
 
+    // Método equals para comparar dois médicos com base no CRM (e outros atributos da classe pai)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,11 +55,13 @@ public class Medico extends Pessoa{
         return Objects.equals(crm, medico.crm);
     }
 
+    // Método hashCode para gerar o código hash baseado no CRM e outros atributos da classe pai
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), crm);
     }
 
+    // Método toString para representar o médico como uma string
     @Override
     public String toString() {
         return "---------------------" + "\n"

@@ -8,13 +8,14 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ValidadorHorario {
-    private final ConsultaRepository consultaRepository;
+    private final ConsultaRepository consultaRepository; // Dependência para operações de consulta no repositório
 
     public ValidadorHorario(ConsultaRepository consultaRepository) {
-        this.consultaRepository = consultaRepository;
+        this.consultaRepository = consultaRepository; // Injeta o repositório no validador
     }
 
     public void validarHorarioFuncionamentoClinica(LocalDateTime data) {
+        // Verifica se a data está fora do horário de funcionamento: domingo, antes das 7h ou após as 18h
         boolean domingo = data.getDayOfWeek().equals(DayOfWeek.SUNDAY);
         boolean antesDaAbertura = data.getHour() < 7;
         boolean depoisDoEncerramento = data.getHour() > 18;
@@ -25,6 +26,7 @@ public class ValidadorHorario {
     }
 
     public void validarHorarioAntecedenciaAgendamento(LocalDateTime data) {
+        // Verifica se o agendamento é feito com pelo menos 30 minutos de antecedência
         long diferencaEmMinutos = Duration.between(LocalDateTime.now(), data).toMinutes();
 
         if (diferencaEmMinutos < 30) {
@@ -33,7 +35,7 @@ public class ValidadorHorario {
     }
 
     public void validarHorarioAntecedenciaCancelamento(Long id) {
-        // Busca a consulta pelo ID
+        // Busca a consulta pelo ID e verifica se o cancelamento está sendo feito com antecedência mínima de 24 horas
         Consulta consulta = consultaRepository.buscarConsultaPorId(id);
         if (consulta == null) {
             throw new ValidacaoException("Consulta não encontrada.");

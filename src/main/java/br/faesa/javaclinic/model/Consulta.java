@@ -8,21 +8,22 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Consulta {
-    private Long id;
+    private long id; // ID único da consulta
 
-    @NotBlank(message = "O nome do médico é obrigatório.")
+    @NotBlank(message = "O nome do médico é obrigatório.") // Garante que o nome do médico não seja vazio
     private String nomeMedico;
 
-    @NotBlank(message = "O nome do paciente é obrigatório.")
+    @NotBlank(message = "O nome do paciente é obrigatório.") // Garante que o nome do paciente não seja vazio
     private String nomePaciente;
 
-    @NotNull(message = "Especialidade é obrigatória")
+    @NotNull(message = "Especialidade é obrigatória") // Garante que a especialidade não seja nula
     private Especialidade especialidade;
 
-    @Future(message = "A data da consulta deve ser no futuro.")
+    @Future(message = "A data da consulta deve ser no futuro.") // Garante que a data e hora da consulta seja no futuro
     private LocalDateTime data;
 
-    public Consulta(Long id, String nomeMedico, String nomePaciente, Especialidade especialidade, LocalDateTime data) {
+    // Construtor com todos os parâmetros
+    public Consulta(long id, String nomeMedico, String nomePaciente, Especialidade especialidade, LocalDateTime data) {
         this.id = id;
         this.nomeMedico = nomeMedico;
         this.nomePaciente = nomePaciente;
@@ -30,19 +31,21 @@ public class Consulta {
         this.data = data;
     }
 
+    // Construtor sem argumentos, útil para a criação de instâncias sem dados iniciais
     public Consulta() {
-        this.id = null;
+        this.id = 0;
         this.nomeMedico = "";
         this.nomePaciente = "";
         this.especialidade = null;
         this.data = null;
     }
 
-    public Long getId() {
+    // Métodos getters e setters
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -78,6 +81,7 @@ public class Consulta {
         this.data = data;
     }
 
+    // Método equals para comparar duas consultas com base no ID
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,11 +90,13 @@ public class Consulta {
         return Objects.equals(id, consulta.id);
     }
 
+    // Método hashCode para garantir que o hash seja consistente com o método equals
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
 
+    // Método toString para exibir informações sobre a consulta de forma legível
     @Override
     public String toString() {
         return "---------------------" +
