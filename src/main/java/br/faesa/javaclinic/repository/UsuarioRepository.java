@@ -1,5 +1,6 @@
 package br.faesa.javaclinic.repository;
 
+import br.faesa.javaclinic.model.Medico;
 import br.faesa.javaclinic.service.Usuario;
 
 import java.io.*;
@@ -10,12 +11,21 @@ import java.util.stream.Collectors;
 public class UsuarioRepository {
     private static final String PATH_USUARIOS = "C:" + File.separator + "Users" + File.separator + "luana" + File.separator + "Persistencia" + File.separator + "usuarios.txt";
 
+    public static Usuario buscarUsuarioPorNomeDeUsuario(String nomeUsuario) {
+        List<Usuario> usuarios = carregarUsuarios();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getUsuario().equals(nomeUsuario)) { // Verifica se o nome de usuário é o informado
+                return usuario; // Retorna o usuário encontrado
+            }
+        }
+        return null; // Retorna null caso não encontre
+    }
+
     public static void salvarUsuarios(List<Usuario> usuarios) {
         // Remove usuários duplicados a partir do método equals e hashCode, mantendo apenas instâncias únicas na lista
         List<Usuario> usuariosUnicos = usuarios.stream()
                 .distinct()
                 .collect(Collectors.toList());
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_USUARIOS))) {
             for (Usuario u : usuariosUnicos) {
                 // Escreve as informações do usuário no arquivo, separadas por ponto e vírgula

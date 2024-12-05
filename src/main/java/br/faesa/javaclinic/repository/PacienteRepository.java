@@ -20,6 +20,16 @@ public class PacienteRepository {
         return null; // Retorna null caso não encontre
     }
 
+    public static Paciente buscarPacientePorEmail(String email) {
+        List<Paciente> pacientes = carregarPacientes();
+        for (Paciente paciente : pacientes) {
+            if (paciente.getEmail().equals(email)) { // Verifica se o email do paciente bate com o informado
+                return paciente; // Retorna o paciente encontrado
+            }
+        }
+        return null; // Retorna null caso não encontre
+    }
+
     public static Paciente buscarPacientePorCpf(String cpf) {
         List<Paciente> pacientes = carregarPacientes();
         for (Paciente paciente : pacientes) {

@@ -31,7 +31,7 @@ public class Paciente extends Pessoa{
         this.cpf = cpf;
     }
 
-    // Método equals para comparar dois pacientes com base no CPF (e outros atributos da classe pai)
+    // Método equals para comparar dois pacientes com base no CPF e o atributo email da classe pai
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +41,7 @@ public class Paciente extends Pessoa{
         return Objects.equals(cpf, paciente.cpf);
     }
 
-    // Método hashCode para gerar o código hash baseado no CPF e outros atributos da classe pai
+    // Método hashCode para gerar o código hash baseado no CPF e o atributo email da classe pai
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), cpf);

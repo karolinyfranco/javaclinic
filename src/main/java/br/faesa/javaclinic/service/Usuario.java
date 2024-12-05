@@ -51,7 +51,7 @@ public class Usuario {
         return this.usuario.equals(usuario) && this.senha.equals(senha);
     }
 
-    // Método equals para comparar duas consultas com base no nome de usuário
+    // Método equals para comparar dois usuários com base no nome de usuário
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

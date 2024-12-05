@@ -18,10 +18,7 @@ import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
     private static ConsultaRepository consultaRepository = new ConsultaRepository();
@@ -71,18 +68,18 @@ public class Main {
         System.out.print("Digite a senha: ");
         String senha = scanner.nextLine();
         System.out.print("Digite o tipo de usuário (F para funcionário / P para paciente): ");
-        char tipo = scanner.next().charAt(0);
+        char tipo = scanner.next().toUpperCase().charAt(0);
 
-        // Lista para guardar os usuários existentes
-        List<Usuario> usuariosExistentes = UsuarioRepository.carregarUsuarios(); // Carrega usuários já cadastrados
+        // Verifica se o tipo escolhido é válido
+        if (tipo != 'F' && tipo != 'P'){
+            System.out.println("Tipo inválido, digite 'F' para funcionário ou 'P' para paciente.");
+            return; // Interrompe o fluxo se o tipo for inválido, sem a necessidade de ter "else" e evitando aninhamento
+        }
 
-        // Stream: recurso para processar coleções de dados, nesse caso uma List
-        // Verifica se há um usuário duplicado na lista comparando o nome de usuário com a variável `usuario`
-        boolean usuarioDuplicado = usuariosExistentes.stream().anyMatch(u -> u.getUsuario().equals(usuario));
-
-        if (usuarioDuplicado) {
-            System.out.println("Erro: O nome de usuário '" + usuario + "' já está em uso.");
-            return; // Interrompe o fluxo se o usuário já existe, sem a necessidade de ter "else" e evitando aninhamento
+        // Verifica se o nome de usuário já está em uso na lista comparando com a variável `usuario`
+        if (UsuarioRepository.buscarUsuarioPorNomeDeUsuario(usuario) != null) {
+            System.out.println("O nome de usuário '" + usuario + "' já está em uso.");
+            return;
         }
 
         // Cria a entidade usuário
@@ -203,7 +200,8 @@ public class Main {
     private static void cadastrarMedico() {
         medicosList = MedicoRepository.carregarMedicos();
         String nome, email, endereco, telefone, crm;
-        Especialidade especialidade;
+        Especialidade especialidade = null; // Inicializa como null para evitar problemas
+        List<String> erros = new ArrayList<>(); // Acumula as mensagens de erro do Bean Validation e da classe Especialidade
 
         System.out.print("Nome do médico: ");
         nome = scanner.nextLine();
@@ -220,19 +218,19 @@ public class Main {
             // Lê a entrada do usuário e tenta converter para o tipo Especialidade usando o método fromString
             especialidade = Especialidade.fromString(scanner.nextLine());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return; // Caso a entrada seja inválida, captura a exceção, exibe a mensagem de erro e encerra o fluxo
+            erros.add(e.getMessage()); // Adiciona a mensagem de erro à lista
         }
 
-        // Guarda os médicos já cadastrados na lista
-        List<Medico> medicosExistentes = MedicoRepository.carregarMedicos();
+        // Verifica se o CRM já está em uso
+        if (MedicoRepository.buscarMedicoPorCrm(crm) != null) {
+            System.out.println("O CRM " + crm + " já está em uso.");
+            return;
+        }
 
-        // Verifica se há um médico duplicado na lista comparando o CRM com a variável `crm`.
-        boolean crmDuplicado = medicosExistentes.stream().anyMatch(m -> m.getCrm().equals(crm));
-
-        if (crmDuplicado) {
-            System.out.println("Erro: O CRM " + crm + " já está em uso.");
-            return; // Interrompe o fluxo se o CRM já existe
+        // Verifica se o email já está em uso
+        if (MedicoRepository.buscarMedicoPorEmail(email) != null) {
+            System.out.println("O email " + email + " já está em uso.");
+            return;
         }
 
         Medico medico = new Medico(nome, email, endereco, telefone, crm, especialidade);
@@ -241,11 +239,16 @@ public class Main {
         // Caso existam violações (erros), elas são armazenadas no conjunto 'violations'.
         Set<ConstraintViolation<Medico>> violations = validator.validate(medico);
 
-        if (!violations.isEmpty()) {
-            // Exibe todas as mensagens de erro encontradas no objeto 'medico'.
+        // Adiciona todas as mensagens de erro das validações ao final da lista de erros
+        for (ConstraintViolation<Medico> violation : violations) {
+            erros.add(violation.getMessage());
+        }
+
+        // Verifica se há erros acumulados
+        if (!erros.isEmpty()) {
             System.out.println("Erros encontrados:");
-            for (ConstraintViolation<Medico> violation : violations) {
-                System.out.println("- " + violation.getMessage());
+            for (String erro : erros) {
+                System.out.println("- " + erro);
             }
             return; // Interrompe o fluxo para evitar o cadastro de um objeto inválido.
         }
@@ -272,7 +275,13 @@ public class Main {
 
         // Verifica se o CPF já está em uso
         if (PacienteRepository.buscarPacientePorCpf(cpf) != null) {
-            System.out.println("Erro: O CPF " + cpf + " já está em uso.");
+            System.out.println("O CPF " + cpf + " já está em uso.");
+            return;
+        }
+
+        // Verifica se o email já está em uso
+        if (PacienteRepository.buscarPacientePorEmail(email) != null) {
+            System.out.println("O email " + email + " já está em uso.");
             return;
         }
 
@@ -382,7 +391,7 @@ public class Main {
     private static void atualizarPaciente(){
         pacientesList = PacienteRepository.carregarPacientes();
         System.out.print("Digite o CPF do paciente que deseja atualizar: ");
-        String cpf = scanner.nextLine().trim();
+        String cpf = scanner.nextLine();
 
         // Verifica se o médico existe
         Paciente paciente = PacienteRepository.buscarPacientePorCpf(cpf);
@@ -452,7 +461,7 @@ public class Main {
         }
 
         System.out.print("Deseja escolher um médico? (S/N): ");
-        char escolha = scanner.next().charAt(0);
+        char escolha = scanner.next().toUpperCase().charAt(0);
         scanner.nextLine();
 
         if (escolha == 'S') {

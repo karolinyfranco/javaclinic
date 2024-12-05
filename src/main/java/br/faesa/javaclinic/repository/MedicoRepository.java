@@ -21,6 +21,16 @@ public class MedicoRepository {
         return null; // Retorna null caso não encontre
     }
 
+    public static Medico buscarMedicoPorEmail(String email) {
+        List<Medico> medicos = carregarMedicos();
+        for (Medico medico : medicos) {
+            if (medico.getEmail().equals(email)) { // Verifica se o email do médico é o informado
+                return medico; // Retorna o médico encontrado
+            }
+        }
+        return null; // Retorna null caso não encontre
+    }
+
     public static Especialidade getEspecialidadeDoMedico(String nomeMedico) {
         List<Medico> medicos = carregarMedicos();
         for (Medico medico : medicos) {

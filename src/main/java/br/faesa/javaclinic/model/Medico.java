@@ -45,7 +45,7 @@ public class Medico extends Pessoa{
         this.especialidade = especialidade;
     }
 
-    // Método equals para comparar dois médicos com base no CRM (e outros atributos da classe pai)
+    // Método equals para comparar dois médicos com base no CRM e o atributo email da classe pai
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,7 +55,7 @@ public class Medico extends Pessoa{
         return Objects.equals(crm, medico.crm);
     }
 
-    // Método hashCode para gerar o código hash baseado no CRM e outros atributos da classe pai
+    // Método hashCode para gerar o código hash baseado no CRM e o atributo email da classe pai
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), crm);

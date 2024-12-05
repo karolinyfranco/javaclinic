@@ -7,20 +7,12 @@
     <list default="true" id="880a8861-866c-4f88-b594-c7cde3e712b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Consulta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Consulta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Especialidade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Especialidade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Medico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Medico.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Paciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Paciente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/model/Pessoa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/ConsultaRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/MedicoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/PacienteRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/repository/UsuarioRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/LoginService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidacaoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidacaoException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorHorario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorHorario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorMedico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/faesa/javaclinic/service/validator/ValidadorMedico.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,26 +39,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.AtualizarMedicoTest.executor": "Run",
-    "JUnit.AtualizarMedicoTest.testAtualizarNomeMedicoComSucesso.executor": "Run",
-    "JUnit.CadastroMedicoMockTest.executor": "Run",
-    "JUnit.CadastroMedicoTest.executor": "Run",
-    "JUnit.CadastroPacienteTest.executor": "Run",
-    "JUnit.CadastroPacienteTest.testCadastroPacienteComDadosInvalidos.executor": "Run",
-    "JUnit.CadastroPacienteTest.testCadastroPacienteComDadosValidos.executor": "Run",
-    "JUnit.CancelamentoConsulaTest.executor": "Run",
-    "JUnit.CancelamentoConsultaTest.executor": "Run",
-    "JUnit.CancelamentoConsultaTest.testCancelarConsulta.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/luana/OneDrive/Documentos/karol faesa/2 periodo/lab de programação II/lista5"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AtualizarMedicoTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AtualizarMedicoTest.testAtualizarNomeMedicoComSucesso.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CadastroMedicoMockTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CadastroMedicoTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CadastroPacienteTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CadastroPacienteTest.testCadastroPacienteComDadosInvalidos.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CadastroPacienteTest.testCadastroPacienteComDadosValidos.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CancelamentoConsulaTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CancelamentoConsultaTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CancelamentoConsultaTest.testCancelarConsulta.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/luana/OneDrive/Documentos/karol faesa/2 periodo/lab de programação II/lista5&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.faesa.javaclinic.Main" />
